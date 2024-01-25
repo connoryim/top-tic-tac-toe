@@ -1,4 +1,17 @@
 //Factory function for creating players and assigning symbols
+function newPlayer (name){
+    return{
+        name : name,
+        playerSymbol(symbol){
+            this.symbol = symbol;
+            console.log(this);
+        },
+    };
+};
+
+const playerOne = newPlayer("Tyler");
+console.log(playerOne);
+playerOne.playerSymbol("a")
 
 //Function for changing turns and assigning first player
 
