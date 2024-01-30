@@ -46,3 +46,79 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+#getPlayers{
+    background-color: rgb(30, 94, 17);
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 2fr;
+    grid-template-rows: 6vh 2fr 1fr 1fr;
+    height: 100vh;
+    padding: 0 24px;
+    text-align: center;
+}
+
+#getPlayers button {
+    background-color: white;
+    border-style: none;
+    font-size: 5rem;
+    padding: 16px;
+    box-shadow: 0 2px 24px 0 rgba(0,0,0,0.3);
+}
+
+#getPlayers div{
+    grid-row: 2;
+}
+
+#buttonsBlock{
+    display: flex;
+    gap: 16px;
+    margin: 24px;
+    grid-row: 2;
+    grid-column: 2;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+    padding: 24px;
+    height: 100%;
+}
+
+#buttonsBlock button{
+     height: 136px;
+     width: 136px;
+     border-radius: 4px;
+}
+
+
+#getPlayers Span{
+    font-size: 3rem;
+    margin: 16px;
+}
+
+#divPlayer {
+     display: grid;
+}
+
+#newGameButton{
+    grid-column: 2;
+    grid-row: 3;
+    height: fit-content;
+    width: max-content;
+    border-radius: 4px;
+    justify-self: center;
+}
+
+#blockPlayerOne{
+    display: flex;
+    justify-self:end;
+    align-self: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+#blockPlayerTwo{
+    display: flex;
+    justify-self:start;
+    align-self: center;
+    flex-direction: column;
+    text-align: center;
+}
