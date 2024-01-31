@@ -122,3 +122,26 @@ table {
     flex-direction: column;
     text-align: center;
 }
+
+#gameContainer{
+    background-color: blue;
+    height: 100vh;
+}
+
+#gameBoard{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
+    gap:4px;
+    height: 400px;
+    width: 400px;
+}
+
+#scoreBoard{
+    display: flex;
+}
+
+#scoreBoard div{
+    margin: 12px;
+    background: green;
+}
