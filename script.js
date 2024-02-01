@@ -10,6 +10,26 @@ function newPlayer (name){
     };
 };
 
+function clearBoard(){
+    return  [
+                {
+                    a1:"",
+                    a2:"",
+                    a3:""
+                },
+                {
+                    b1:"",
+                    b2:"",
+                    b3:""
+                },
+                {
+                    c1:"",
+                    c2:"",
+                    c3:"",
+                }
+    ]
+}
+
 function getPlayers (){
     const divPlayer = document.createElement("div");
     const container = document.getElementById("container");
@@ -124,23 +144,8 @@ function switchSymbols(){
 function setupGame(){
     this.parentNode.remove()
 
-    const boardSymbols = [
-        {
-            a1:"",
-            a2:"",
-            a3:""
-        },
-        {
-            b1:"",
-            b2:"",
-            b3:""
-        },
-        {
-            c1:"",
-            c2:"",
-            c3:"",
-        }
-    ]
+    const boardSymbols = clearBoard();
+    console.log(boardSymbols);
 
 
     const gameContainer = document.createElement("div");
@@ -217,6 +222,8 @@ function setupGame(){
     
 }
 
+
+//Function for placing symbols onto the board 
 function claimSpace(){
     if(this.textContent==""){
         console.log(this);
@@ -231,7 +238,6 @@ getPlayers();
 
 //Function for changing turns and assigning first player
 
-//Function for placing symbols onto the board 
 
 //Function for displaying symbols on a board
 
