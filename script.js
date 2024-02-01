@@ -203,6 +203,7 @@ function setupGame(){
             gameSpace.setAttribute("id",nameSpace);
             gameSpace.classList.add("space");
             gameSpace.textContent =""
+            gameSpace.addEventListener("click",claimSpace);
             gameBoard.appendChild(gameSpace);
         }
     };
@@ -216,6 +217,13 @@ function setupGame(){
     
 }
 
+function claimSpace(){
+    if(this.textContent==""){
+        console.log(this);
+        this.classList.add("x");
+        this.textContent = "x";
+    };
+}
 
 getPlayers();
 
