@@ -1,15 +1,16 @@
-//Factory function for creating players and assigning symbols
-
-function newPlayer (name){
+//Function for creating players and assigning symbols
+function newPlayer (name,symbol){
     return{
         name : name,
-        playerSymbol(symbol){
-            this.symbol = symbol;
-            console.log(this);
-        },
+        symbol:symbol,
+        score: 0,
+        scoreUp: function(){
+            this.score += 1; 
+        }
     };
 };
 
+//Function for reseting the board
 function clearBoard(){
     return  [
                 {
@@ -30,6 +31,8 @@ function clearBoard(){
     ]
 }
 
+
+//Function for getting new players
 function getPlayers (){
     const divPlayer = document.createElement("div");
     const container = document.getElementById("container");
@@ -43,6 +46,7 @@ function getPlayers (){
     
     const firstInputPlayer = inputPlayer.cloneNode(true);
     firstInputPlayer.setAttribute("id","firstInputPlayer");
+    firstInputPlayer.setAttribute("value","Player 1")
     
     const textPlayerOne = document.createElement("span");
     textPlayerOne.textContent = "Player 1:";
@@ -54,14 +58,15 @@ function getPlayers (){
     const blockPlayerTwo = document.createElement("div");
     blockPlayerTwo.setAttribute("id","blockPlayerTwo");
     
-    const secondInputPlayer = inputPlayer.cloneNode(true);
-    secondInputPlayer.setAttribute("id","secondInputPlayer");
+    const secInputPlayer = inputPlayer.cloneNode(true);
+    secInputPlayer.setAttribute("id","secInputPlayer");
+    secInputPlayer.setAttribute("value","Player 2");
 
     const textPlayerTwo = document.createElement("span");
     textPlayerTwo.textContent = "Player 2:";
 
     blockPlayerTwo.appendChild(textPlayerTwo);
-    blockPlayerTwo.appendChild(secondInputPlayer);
+    blockPlayerTwo.appendChild(secInputPlayer);
 
 
     //Block for buttons
@@ -100,7 +105,7 @@ function getPlayers (){
 };
 
 
-
+//ALlows the user to choose which symbol they want
 function switchSymbols(){
     console.log(this);
     let otherButton = ""
@@ -142,6 +147,17 @@ function switchSymbols(){
 };
 
 function setupGame(){
+    const firstName = document.getElementById("firstInputPlayer");
+    const firstSymbol = document.getElementById("symbolButtonOne");
+    const playerOne = newPlayer(firstName.value,firstSymbol.textContent);
+
+    const secName = document.getElementById("secInputPlayer");
+    const secSymbol = document.getElementById("symbolButtonTwo");
+    const playerTwo = newPlayer(secName.value,secSymbol.textContent);
+
+
+    console.log(playerOne);
+    console.log(playerTwo);
     this.parentNode.remove()
 
     const boardSymbols = clearBoard();
@@ -169,7 +185,7 @@ function setupGame(){
     
     const namePlayerOne = document.createElement("span");
     namePlayerOne.setAttribute("id","namePlayerOne");
-    namePlayerOne.textContent = "player 1: "
+    namePlayerOne.textContent = playerOne
     
     const pointsPlayerOne = document.createElement("span");
     pointsPlayerOne.setAttribute("id","pointsPlayerOne");
@@ -232,19 +248,30 @@ function claimSpace(){
     };
 }
 
-getPlayers();
-
-//Function for assigning symbol to player
 
 //Function for changing turns and assigning first player
-
-
-//Function for displaying symbols on a board
+function playerTurns(num){
+    //Sets first players turn
+    let currentTurn = Math.floor(Math.random()*num);
+    console.log(currentTurn);
+    function nextTurn() {
+        if (currentTurn){
+            currentTurn = 0;
+            return currentTurn;
+        } else{
+            currentTurn = 1;
+            return currentTurn;
+        }
+    };
+    return {
+        nextTurn: nextTurn
+    };
+}
 
 //Function to keep track of the board
 
 //Function for checking if there is three in a row
 
-//Function for reseting the board
 
-//Function for new game 
+playerTurns(2);
+getPlayers();
