@@ -1,35 +1,29 @@
 //Function for creating players and assigning symbols
-function newPlayer (name,symbol){
+function newPlayer (){
     return{
-        name : name,
-        symbol:symbol,
+        name: "",
+        symbol: "",
         score: 0,
         scoreUp: function(){
-            this.score += 1; 
+            this.score +=1; 
         }
     };
 };
 
 //Function for reseting the board
 function clearBoard(){
-    return  [
-                {
-                    a1:"",
-                    a2:"",
-                    a3:""
-                },
-                {
-                    b1:"",
-                    b2:"",
-                    b3:""
-                },
-                {
-                    c1:"",
-                    c2:"",
-                    c3:"",
-                }
-    ]
-}
+    return {
+        a1:"",
+        a2:"",
+        a3:"",
+        b1:"",
+        b2:"",
+        b3:"",
+        c1:"",
+        c2:"",
+        c3:""
+    }
+};
 
 
 //Function for getting new players
@@ -107,7 +101,6 @@ function getPlayers (){
 
 //ALlows the user to choose which symbol they want
 function switchSymbols(){
-    console.log(this);
     let otherButton = ""
     if(this.matches("#symbolButtonOne")){
         otherButton = document.getElementById("symbolButtonTwo")    
@@ -147,22 +140,19 @@ function switchSymbols(){
 };
 
 function setupGame(){
-    const firstName = document.getElementById("firstInputPlayer");
-    const firstSymbol = document.getElementById("symbolButtonOne");
-    const playerOne = newPlayer(firstName.value,firstSymbol.textContent);
 
-    const secName = document.getElementById("secInputPlayer");
-    const secSymbol = document.getElementById("symbolButtonTwo");
-    const playerTwo = newPlayer(secName.value,secSymbol.textContent);
+    const playerOne = newPlayer()
+    playerOne.name = document.getElementById("firstInputPlayer").value
+    playerOne.symbol = document.getElementById("symbolButtonOne").textContent
+
+    const playerTwo = newPlayer()
+    playerTwo.name = document.getElementById("secInputPlayer").value
+    playerTwo.symbol = document.getElementById("symbolButtonTwo").textContent
 
 
-    console.log(playerOne);
-    console.log(playerTwo);
     this.parentNode.remove()
 
-    const boardSymbols = clearBoard();
-    console.log(boardSymbols);
-
+    const gameBoard = clearBoard();
 
     const gameContainer = document.createElement("div");
     gameContainer.setAttribute("id","gameContainer");
@@ -185,7 +175,7 @@ function setupGame(){
     
     const namePlayerOne = document.createElement("span");
     namePlayerOne.setAttribute("id","namePlayerOne");
-    namePlayerOne.textContent = playerOne
+    namePlayerOne.textContent = playerOne.name + ": "
     
     const pointsPlayerOne = document.createElement("span");
     pointsPlayerOne.setAttribute("id","pointsPlayerOne");
@@ -202,7 +192,7 @@ function setupGame(){
     
     const namePlayerTwo = document.createElement("span");
     namePlayerTwo.setAttribute("id","namePlayerTwo");
-    namePlayerTwo.textContent = "player 2: "
+    namePlayerTwo.textContent = playerTwo.name + ": "
     
     const pointsPlayerTwo = document.createElement("span");
     pointsPlayerTwo.setAttribute("id","pointsPlayerTwo");
@@ -214,64 +204,62 @@ function setupGame(){
     scoreBoard.appendChild(scorePlayerTwo);
 
 
-    const gameBoard = document.createElement("div");
-    gameBoard.setAttribute("id","gameBoard")
+    const displayBoard = document.createElement("div");
+    displayBoard.setAttribute("id","displayBoard")
 
+
+    for(var i in gameBoard){
+        const gameSpace = document.createElement("button");
+        gameSpace.setAttribute("id",i);
+        gameSpace.classList.add("space");
+        gameSpace.textContent =gameBoard[i];
+        gameSpace.addEventListener("click",claimSpace);
+        displayBoard.appendChild(gameSpace);
     
-    for(i=0; i<boardSymbols.length; i++){
-        for(var nameSpace in boardSymbols[i]){
-            const gameSpace = document.createElement("button");
-            gameSpace.setAttribute("id",nameSpace);
-            gameSpace.classList.add("space");
-            gameSpace.textContent =""
-            gameSpace.addEventListener("click",claimSpace);
-            gameBoard.appendChild(gameSpace);
-        }
     };
-
-
-    
+    let currentTurn = playerTurns(2);
+    console.log(gameBoard);
+    //Function for placing symbols onto the board 
+    function claimSpace(){
+        if(this.textContent==""){
+            if(currentTurn){
+                this.classList.add(playerOne.symbol);
+                this.textContent = playerOne.symbol;
+                gameBoard[this.id] = this.textContent;
+                return currentTurn = 0;
+            }else{
+                this.classList.add(playerTwo.symbol);
+                this.textContent = playerTwo.symbol;
+                gameBoard[this.id] = this.textContent;
+                return currentTurn = 1;
+                
+            };
+        };
+    }
+    //Function for changing turns and assigning first player
+    function playerTurns(num){
+        //Sets first players turn
+        let firstTurn = Math.floor(Math.random()*num);
+        function nextTurn() {
+            if (currentTurn || firstTurn){
+                currentTurn = 0;
+                return currentTurn;
+            } else{
+                currentTurn = 1;
+                return currentTurn;
+            }
+        };
+        return {
+            nextTurn: nextTurn
+        };  
+    };
     gameContainer.appendChild(newPlayers);
     gameContainer.appendChild(scoreBoard);
-    gameContainer.appendChild(gameBoard);
+    gameContainer.appendChild(displayBoard);
     document.body.appendChild(gameContainer);
-    
-}
+};
 
-
-//Function for placing symbols onto the board 
-function claimSpace(){
-    if(this.textContent==""){
-        console.log(this);
-        this.classList.add("x");
-        this.textContent = "x";
-    };
-}
-
-
-//Function for changing turns and assigning first player
-function playerTurns(num){
-    //Sets first players turn
-    let currentTurn = Math.floor(Math.random()*num);
-    console.log(currentTurn);
-    function nextTurn() {
-        if (currentTurn){
-            currentTurn = 0;
-            return currentTurn;
-        } else{
-            currentTurn = 1;
-            return currentTurn;
-        }
-    };
-    return {
-        nextTurn: nextTurn
-    };
-}
 
 //Function to keep track of the board
-
 //Function for checking if there is three in a row
-
-
-playerTurns(2);
 getPlayers();

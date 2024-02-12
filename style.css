@@ -128,7 +128,7 @@ table {
     height: 100vh;
 }
 
-#gameBoard{
+#displayBoard{
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: repeat(3,1fr);
