@@ -218,7 +218,6 @@ function setupGame(){
     
     };
     let currentTurn = playerTurns(2);
-    console.log(gameBoard);
     //Function for placing symbols onto the board 
     function claimSpace(){
         if(this.textContent==""){
@@ -226,11 +225,13 @@ function setupGame(){
                 this.classList.add(playerOne.symbol);
                 this.textContent = playerOne.symbol;
                 gameBoard[this.id] = this.textContent;
+                winCheck(gameBoard);
                 return currentTurn = 0;
             }else{
                 this.classList.add(playerTwo.symbol);
                 this.textContent = playerTwo.symbol;
                 gameBoard[this.id] = this.textContent;
+                winCheck(gameBoard);
                 return currentTurn = 1;
                 
             };
@@ -260,6 +261,43 @@ function setupGame(){
 };
 
 
+function winCheck (gameBoard){
+    const columns = {
+        a:"a",
+        b:"b",
+        c:"c"}
+    for(var k in columns){
+        if(gameBoard[k+1] == gameBoard[k+2] && gameBoard[k+2] == gameBoard[k+3] && gameBoard[k+1]!= ""){
+            return console.log("winner!");
+        }
+    }
+
+    for(var i = 1; i < 4; i++){
+        if(gameBoard["a"+i] == gameBoard["b"+i] && gameBoard["b"+i] == gameBoard["c"+i] && gameBoard["a"+ i] == true){
+            return console.log("warner!");
+        }
+    }
+
+    if(gameBoard["a1"] == gameBoard["b2"] && gameBoard["b2"] == gameBoard["c3"] && gameBoard["b2"]!==""){
+        return console.log("warner!");
+    } else if(gameBoard["a3"] == gameBoard["b2"] && gameBoard["b2"] == gameBoard["c1"] && gameBoard["b2"] !==""){
+        return console.log("warner!");
+    }
+    checkTie(gameBoard);
+    
+}
+
+
+function checkTie(gameBoard){
+    for(var i in gameBoard){
+        if(gameBoard[i]== false){
+            return;
+        }
+    }
+    console.log("horse");
+
+   
+}
 //Function to keep track of the board
 //Function for checking if there is three in a row
 getPlayers();
