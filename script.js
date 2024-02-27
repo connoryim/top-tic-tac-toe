@@ -152,6 +152,10 @@ function setupGame(){
 
     this.parentNode.remove()
 
+    newRound(playerOne,playerTwo)
+};
+
+function newRound(playerOne,playerTwo){
     const gameBoard = clearBoard();
 
     const gameContainer = document.createElement("div");
@@ -226,6 +230,7 @@ function setupGame(){
                 this.textContent = playerOne.symbol;
                 gameBoard[this.id] = this.textContent;
                 if (winCheck(gameBoard) || tieCheck(gameBoard)){
+                    this.parentNode.parentNode.remove();
                     roundOver(gameBoard,playerOne.symbol,playerOne,playerTwo);
                 };
                 return currentTurn = 0;
@@ -234,6 +239,7 @@ function setupGame(){
                 this.textContent = playerTwo.symbol;
                 gameBoard[this.id] = this.textContent;
                 if (winCheck(gameBoard) || tieCheck(gameBoard)){
+                    this.parentNode.parentNode.remove();
                     roundOver(gameBoard,playerTwo.symbol,playerOne,playerTwo);
                 };
                 return currentTurn = 1;
@@ -262,7 +268,7 @@ function setupGame(){
     gameContainer.appendChild(scoreBoard);
     gameContainer.appendChild(displayBoard);
     document.body.appendChild(gameContainer);
-};
+}
 
 
 function winCheck (gameBoard){
@@ -302,11 +308,11 @@ function roundOver(gameBoard,winningSymbol,playerOne,playerTwo){
         console.log("It's a tie");
     }else if(playerOne.symbol == winningSymbol){
         playerOne.scoreUp()
-        console.log(playerOne.name + "wins the round!");
+        console.log(playerOne.name + " wins the round!");
         
     }else if(playerTwo.symbol == winningSymbol){
         playerTwo.scoreUp()
-        console.log(playerTwo.name + "wins the round!");
+        console.log(playerTwo.name + " wins the round!");
     }
 }
 
