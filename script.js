@@ -226,12 +226,14 @@ function setupGame(){
                 this.textContent = playerOne.symbol;
                 gameBoard[this.id] = this.textContent;
                 winCheck(gameBoard);
+                tieCheck(gameBoard);
                 return currentTurn = 0;
             }else{
                 this.classList.add(playerTwo.symbol);
                 this.textContent = playerTwo.symbol;
                 gameBoard[this.id] = this.textContent;
                 winCheck(gameBoard);
+                tieCheck(gameBoard);
                 return currentTurn = 1;
                 
             };
@@ -279,25 +281,21 @@ function winCheck (gameBoard){
     }
 
     if(gameBoard["a1"] == gameBoard["b2"] && gameBoard["b2"] == gameBoard["c3"] && gameBoard["b2"]!==""){
-        return console.log("warner!");
+        return console.log("werner!");
     } else if(gameBoard["a3"] == gameBoard["b2"] && gameBoard["b2"] == gameBoard["c1"] && gameBoard["b2"] !==""){
-        return console.log("warner!");
-    }
-    checkTie(gameBoard);
-    
+        return console.log("werner!");
+    } 
 }
 
 
-function checkTie(gameBoard){
+function tieCheck(gameBoard){
     for(var i in gameBoard){
         if(gameBoard[i]== false){
-            return;
+            return false;
         }
     }
-    console.log("horse");
-
-   
+    return true;
 }
 //Function to keep track of the board
 //Function for checking if there is three in a row
-getPlayers();
+getPlayers(); 
