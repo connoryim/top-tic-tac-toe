@@ -179,7 +179,7 @@ function setupGame(){
     
     const pointsPlayerOne = document.createElement("span");
     pointsPlayerOne.setAttribute("id","pointsPlayerOne");
-    pointsPlayerOne.textContent = 0;
+    pointsPlayerOne.textContent = playerOne.score;
 
     scorePlayerOne.appendChild(namePlayerOne);
     scorePlayerOne.appendChild(pointsPlayerOne);
@@ -196,7 +196,7 @@ function setupGame(){
     
     const pointsPlayerTwo = document.createElement("span");
     pointsPlayerTwo.setAttribute("id","pointsPlayerTwo");
-    pointsPlayerTwo.textContent = 0;
+    pointsPlayerTwo.textContent = playerTwo.score;
 
     scorePlayerTwo.appendChild(namePlayerTwo);
     scorePlayerTwo.appendChild(pointsPlayerTwo);
@@ -225,15 +225,17 @@ function setupGame(){
                 this.classList.add(playerOne.symbol);
                 this.textContent = playerOne.symbol;
                 gameBoard[this.id] = this.textContent;
-                winCheck(gameBoard);
-                tieCheck(gameBoard);
+                if (winCheck(gameBoard) || tieCheck(gameBoard)){
+                    roundOver(gameBoard,playerOne.symbol,playerOne,playerTwo);
+                };
                 return currentTurn = 0;
             }else{
                 this.classList.add(playerTwo.symbol);
                 this.textContent = playerTwo.symbol;
                 gameBoard[this.id] = this.textContent;
-                winCheck(gameBoard);
-                tieCheck(gameBoard);
+                if (winCheck(gameBoard) || tieCheck(gameBoard)){
+                    roundOver(gameBoard,playerTwo.symbol,playerOne,playerTwo);
+                };
                 return currentTurn = 1;
                 
             };
@@ -270,23 +272,20 @@ function winCheck (gameBoard){
         c:"c"}
     for(var k in columns){
         if(gameBoard[k+1] == gameBoard[k+2] && gameBoard[k+2] == gameBoard[k+3] && gameBoard[k+1]!= ""){
-            return console.log("winner!");
+            return true;
         }
     }
-
     for(var i = 1; i < 4; i++){
         if(gameBoard["a"+i] == gameBoard["b"+i] && gameBoard["b"+i] == gameBoard["c"+i] && gameBoard["a"+ i] == true){
-            return console.log("warner!");
+            return true;
         }
     }
-
     if(gameBoard["a1"] == gameBoard["b2"] && gameBoard["b2"] == gameBoard["c3"] && gameBoard["b2"]!==""){
-        return console.log("werner!");
+        return true;
     } else if(gameBoard["a3"] == gameBoard["b2"] && gameBoard["b2"] == gameBoard["c1"] && gameBoard["b2"] !==""){
-        return console.log("werner!");
+        return true;
     } 
 }
-
 
 function tieCheck(gameBoard){
     for(var i in gameBoard){
@@ -296,6 +295,19 @@ function tieCheck(gameBoard){
     }
     return true;
 }
-//Function to keep track of the board
-//Function for checking if there is three in a row
+
+
+function roundOver(gameBoard,winningSymbol,playerOne,playerTwo){
+    if(tieCheck(gameBoard)){
+        console.log("It's a tie");
+    }else if(playerOne.symbol == winningSymbol){
+        playerOne.scoreUp()
+        console.log(playerOne.name + "wins the round!");
+        
+    }else if(playerTwo.symbol == winningSymbol){
+        playerTwo.scoreUp()
+        console.log(playerTwo.name + "wins the round!");
+    }
+}
+
 getPlayers(); 
