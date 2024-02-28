@@ -239,6 +239,7 @@ function newRound(playerOne,playerTwo){
                 this.textContent = playerTwo.symbol;
                 gameBoard[this.id] = this.textContent;
                 if (winCheck(gameBoard) || tieCheck(gameBoard)){
+                    console.log("horse");
                     this.parentNode.parentNode.remove();
                     roundOver(gameBoard,playerTwo.symbol,playerOne,playerTwo);
                 };
@@ -282,7 +283,7 @@ function winCheck (gameBoard){
         }
     }
     for(var i = 1; i < 4; i++){
-        if(gameBoard["a"+i] == gameBoard["b"+i] && gameBoard["b"+i] == gameBoard["c"+i] && gameBoard["a"+ i] == true){
+        if(gameBoard["a"+i] == gameBoard["b"+i] && gameBoard["b"+i] == gameBoard["c"+i] && gameBoard["a"+ i] !=""){
             return true;
         }
     }
@@ -305,30 +306,70 @@ function tieCheck(gameBoard){
 
 function roundOver(gameBoard,winningSymbol,playerOne,playerTwo){
     var winnerText =""
-    if(tieCheck(gameBoard)){
-        winnerText = "It's a tie";
-    }else if(playerOne.symbol == winningSymbol){
+
+    if(playerOne.symbol == winningSymbol){
         playerOne.scoreUp()
         winnerText = playerOne.name + " wins the round!";
-        
     }else if(playerTwo.symbol == winningSymbol){
         playerTwo.scoreUp()
         winnerText = playerTwo.name + " wins the round!";
+    }else{
+        winnerText = "It's a tie";
     }
-    const roundOverScreen = document.createElement("div");
-    roundOverScreen.setAttribute("id","roundOverScreen");
-
-    const roundOverText = document.createElement("span");
-    roundOverText.textContent = winnerText;
     
+    if(playerOne.score == 2){
+        event.stopPropagation();
+        gameOver(playerOne,playerOne,playerTwo)
+    } else if(playerTwo.score == 2){
+        gameOver(playerTwo,playerOne,playerTwo)
+    } else{
+        const roundOverScreen = document.createElement("div");
+        roundOverScreen.setAttribute("id","roundOverScreen");
 
-    roundOverScreen.addEventListener("mousedown",function(){
-        this.remove();
-        newRound(playerOne,playerTwo)
-    });
-    roundOverScreen.appendChild(roundOverText);
-    document.body.appendChild(roundOverScreen);
+        const roundOverText = document.createElement("span");
+        roundOverText.textContent = winnerText;
+        roundOverScreen.addEventListener("mousedown",function(){
+            this.remove();
+            newRound(playerOne,playerTwo)
+        });
+        roundOverScreen.appendChild(roundOverText);
+        document.body.appendChild(roundOverScreen);
+    }
+    
     
 }
+
+function gameOver(winningPlayer,playerOne,playerTwo){
+    console.log("horse");
+    const gameOverScreen = document.createElement("div");
+    gameOverScreen.setAttribute("id","gameOverScreen");
+    const congrats = document.createElement("span");
+
+    congrats.textContent = winningPlayer.name + " wins the game, congratulations!"
+
+    const rematch = document.createElement("button");
+    rematch.textContent = "Rematch";
+    rematch.setAttribute("id","rematch");
+    rematch.addEventListener("mousedown",function(){
+        gameOverScreen.parentNode.remove();
+        playerOne.score = 0;
+        playerTwo.score = 0;
+        newRound(playerOne,playerTwo);
+    });
+
+    const gameOverNP = document.createElement("button");
+    gameOverNP.textContent = "New Players";
+    gameOverNP.setAttribute("id","gameOverNP");
+    gameOverNP.addEventListener("click", ()=>{       
+        gameOverScreen.remove();
+        getPlayers();
+        
+    });
+
+    gameOverScreen.appendChild(congrats);
+    gameOverScreen.appendChild(rematch);
+    gameOverScreen.appendChild(gameOverNP);
+    document.body.appendChild(gameOverScreen);
+};
 
 getPlayers(); 

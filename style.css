@@ -155,3 +155,35 @@ table {
     height: 100vh;
     font-size: 8em;
 }
+
+#gameOverScreen{
+    display:grid;
+    height:100vh;
+    font-size: 6em;
+    background:rgb(100,200,60);
+    grid-template-columns:repeat(4,1fr);
+    grid-template-rows:repeat(4,1fr);
+    grid-gap:60px;
+}
+
+#gameOverScreen span{
+    grid-row: 2;
+    grid-column:2/4;
+    grid-column-start:2;
+    text-align: center;
+}
+
+#rematch{
+    grid-row: 3;
+    grid-column: 2;
+}
+#gameOverNP{
+    grid-row: 3;
+    grid-column: 3;
+}
+
+#gameOverScreen button{
+    border-radius: 16px;
+    font-size:4rem;
+    height:70%;
+}
