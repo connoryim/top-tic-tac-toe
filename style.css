@@ -145,3 +145,13 @@ table {
     margin: 12px;
     background: green;
 }
+
+#roundOverScreen{
+    display:flex;
+    background: red;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    font-size: 8em;
+}

@@ -304,16 +304,31 @@ function tieCheck(gameBoard){
 
 
 function roundOver(gameBoard,winningSymbol,playerOne,playerTwo){
+    var winnerText =""
     if(tieCheck(gameBoard)){
-        console.log("It's a tie");
+        winnerText = "It's a tie";
     }else if(playerOne.symbol == winningSymbol){
         playerOne.scoreUp()
-        console.log(playerOne.name + " wins the round!");
+        winnerText = playerOne.name + " wins the round!";
         
     }else if(playerTwo.symbol == winningSymbol){
         playerTwo.scoreUp()
-        console.log(playerTwo.name + " wins the round!");
+        winnerText = playerTwo.name + " wins the round!";
     }
+    const roundOverScreen = document.createElement("div");
+    roundOverScreen.setAttribute("id","roundOverScreen");
+
+    const roundOverText = document.createElement("span");
+    roundOverText.textContent = winnerText;
+    
+
+    roundOverScreen.addEventListener("mousedown",function(){
+        this.remove();
+        newRound(playerOne,playerTwo)
+    });
+    roundOverScreen.appendChild(roundOverText);
+    document.body.appendChild(roundOverScreen);
+    
 }
 
 getPlayers(); 
