@@ -351,7 +351,7 @@ function gameOver(winningPlayer,playerOne,playerTwo){
     rematch.textContent = "Rematch";
     rematch.setAttribute("id","rematch");
     rematch.addEventListener("mousedown",function(){
-        gameOverScreen.parentNode.remove();
+        gameOverScreen.remove();
         playerOne.score = 0;
         playerTwo.score = 0;
         newRound(playerOne,playerTwo);
